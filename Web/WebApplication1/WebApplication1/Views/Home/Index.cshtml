@@ -1,0 +1,26 @@
+﻿
+
+@model IEnumerable<Product>
+@{
+	Layout = "_Layout";
+}
+
+<table class="table table-sm table-striped">
+	<thead>
+		<tr>
+			<th> Name </th>
+			<th> Category </th>
+			<th> Price </th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var p in Model)
+		{
+			<tr>
+				<th> @p.Name </th>
+				<th> @p.Category </th>
+				<th> @p.Price </th>
+			</tr>
+		}
+	</tbody>
+</table>
