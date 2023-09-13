@@ -1,0 +1,31 @@
+﻿@model Product
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = ViewBag.CreateMode ? "Create" : "Edit";
+}
+
+<form method="post" asp-action="@(ViewBag.CreateMode ? "Create":"Edit")">
+    
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+    </div>
+    
+    <div>
+        <label asp-for="Category"></label>
+        <input asp-for="Category"/>
+    </div>
+    
+    <div>
+        <label asp-for="Price"></label>
+        <input asp-for="Price"/>
+    </div>
+    
+    <div>
+        <button type="submit">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+    
+    
+</form>
