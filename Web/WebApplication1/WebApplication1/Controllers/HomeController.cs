@@ -19,8 +19,8 @@ namespace WebApplication1.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.CreateMode = "Create";
-            // return View("Editor", new Product());// This line must be uncomment in the future
+            ViewBag.CreateMode = true;
+            //return View("Editor", new Product());// This line must be uncomment in the future
             
             return View("Editor");
             // This line should be deleted in the future,
@@ -33,6 +33,31 @@ namespace WebApplication1.Controllers
             _repository.CreateProduct(product);
             return RedirectToAction(nameof(Index));
         }
-        
+
+        public IActionResult Edit(int id)
+        {
+            ViewBag.CreateMode = false;
+            //return View("Editor", new Product());// This line must be uncomment in the future
+
+            return View("Editor", _repository.GetProduct(id));
+            // This line should be deleted in the future,
+            // only for testing that all worked correctly
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Product product)
+        {
+            _repository.UpdateProduct(product);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _repository.DeleteProduct(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

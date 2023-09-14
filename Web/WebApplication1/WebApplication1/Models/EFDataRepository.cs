@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace WebApplication1.Models;
 
 public class EFDataRepository : IDataRepository
 {
@@ -12,7 +14,14 @@ public class EFDataRepository : IDataRepository
     
     public Product GetProduct(int id)
     {
-        throw new NotImplementedException();
+        foreach(var a in context.Products)
+        {
+            if (a.Id == id)
+            {
+                return a;
+            }
+        }
+        return new Product("defaultName", "defaultCategory", 0m);
     }
 
     public IEnumerable<Product> GetAllProducts()
@@ -22,16 +31,23 @@ public class EFDataRepository : IDataRepository
 
     public void DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        var product = context.Products.FirstOrDefault(p => p.Id == id);
+        if (product != null)
+        {
+            context.Products.Remove(product);
+            context.SaveChanges();
+        }
     }
 
     public void UpdateProduct(Product product)
     {
-        throw new NotImplementedException();
+        context.Entry(product).State = EntityState.Modified;
+        context.SaveChanges();
     }
 
     public void CreateProduct(Product product)
     {
-        throw new NotImplementedException();
+        context.Products.Add(product);
+        context.SaveChanges();
     }
 }

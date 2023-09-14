@@ -1,35 +1,35 @@
-﻿
-
-@model IEnumerable<Product>
+﻿@model IEnumerable<Product>
 @{
-	Layout = "_Layout";
+    ViewData["Title"] = "Products";
+    Layout = "_Layout";
 }
 
 <table class="table table-sm table-striped">
-	<thead>
-	<tr>
-		<th> Name </th>
-		<th> Category </th>
-		<th> Price </th>
-	</tr>
-	</thead>
-	<tbody>
-	@foreach(var t in Model)
-	{
-		<tr>
-			<td> @t.Name </td>
-			<td> @t.Category </td>
-			<td> @t.Price </td>
-			<td>
-				<form asp-action="Delete" method="post">
-					<a asp-action="Edit" asp-route-id="@t.Id">Edit</a>
-					<button type="submit">Delete</button>
-						
-				</form>
-			</td>
-		</tr>
-	}
-	</tbody>
+    <thead>
+        <tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Name</td>
+                <td>@p.Category</td>
+                <td>$@p.Price.ToString("F2")</td>
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <a asp-action="Edit"
+                           class="btn btn-sm btn-warning" asp-route-id="@p.Id">
+                            Edit
+                        </a>
+                        <input type="hidden" name="id" value="@p.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
-
-<a asp-action="Create">Create</a>
+<a asp-action="Create" class="btn btn-primary">Create New Product</a>
