@@ -5,14 +5,34 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private IDataRepository _repository;
+
+        public HomeController(IDataRepository repository)
         {
-            return View(new Product[]
-            {
-                new Product("Table", "Furniture", 300m),
-                new Product("Chair", "Furniture", 40m),
-                new Product("Great new world", "Books", 15m)
-            });
+            _repository = repository;
         }
+        
+        public ViewResult Index()// Maybe need to change return type on IActionResult
+        {
+            return View(_repository.GetAllProducts());
+        }
+
+        public IActionResult Create()
+        {
+            ViewBag.CreateMode = "Create";
+            // return View("Editor", new Product());// This line must be uncomment in the future
+            
+            return View("Editor");
+            // This line should be deleted in the future,
+            // only for testing that all worked correctly
+        }
+
+        [HttpPost]
+        public IActionResult Create(Product product)
+        {
+            _repository.CreateProduct(product);
+            return RedirectToAction(nameof(Index));
+        }
+        
     }
 }
