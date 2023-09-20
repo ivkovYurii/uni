@@ -24,6 +24,22 @@ public class EFDataRepository : IDataRepository
         return new Product("defaultName", "defaultCategory", 0m);
     }
 
+    public IEnumerable<Product> GetFilteredProducts(string category = null, decimal? price = null)
+    {
+        IQueryable<Product> data = context.Products;
+        if (category!=null)
+        {
+            data = data.Where(data => data.Category == category);
+        }
+
+        if (price!=null)
+        {
+            data = data.Where(data => data.Price >= price);
+        }
+
+        return data;
+    }
+
     public IEnumerable<Product> GetAllProducts()
     {
         return context.Products;

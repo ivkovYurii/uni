@@ -12,9 +12,14 @@ namespace WebApplication1.Controllers
             _repository = repository;
         }
         
-        public ViewResult Index()// Maybe need to change return type on IActionResult
+        public ViewResult Index(string category = null ,decimal? price = null )// Maybe need to change return type on IActionResult
         {
-            return View(_repository.GetAllProducts());
+            var data = _repository.GetFilteredProducts(category, price);
+            ViewBag.category = category;
+            ViewBag.price = price;
+            
+            // return View(_repository.GetAllProducts());
+            return View(data);
         }
 
         public IActionResult Create()
