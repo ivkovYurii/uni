@@ -25,9 +25,9 @@ namespace WebApplication1.Controllers
         public IActionResult Create()
         {
             ViewBag.CreateMode = true;
-            //return View("Editor", new Product());// This line must be uncomment in the future
+            return View("Editor", new Product());// This line must be uncomment in the future
             
-            return View("Editor");
+            // return View("Editor");
             // This line should be deleted in the future,
             // only for testing that all worked correctly
         }
